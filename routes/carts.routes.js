@@ -13,23 +13,23 @@ const cartHandler = new CartManager;
 
 router.post('/',uploader.single('file'),async function(req,res){
   
-  await cartHandler.addCart()
-  res.send({status:"ok",message:"carrito creado"})
+  const {status,message,data} = await cartHandler.addCart()
+  res.send({status:status,message:message,value:data})
 
 })
 
 router.get('/:cid',uploader.single('file'),async function(req,res){
   let id = parseInt(req.params.cid)
-  const cartContent = await cartHandler.getCartById(id)
-  res.send({cartContent})
+  const {status,message,data} = await cartHandler.getCartById(id)
+  res.send({status:status,message:message,value:data})
  
 })
 
 router.post('/:cid/product/:pid',uploader.single('file'),async function(req,res){
   let CartId = parseInt(req.params.cid)
   let ProductId = parseInt(req.params.pid)
-  await cartHandler.addProductToCartIdById(CartId,ProductId)
+  const {status,message,data} = await cartHandler.addProductToCartIdById(CartId,ProductId)
 
-res.send({status:"ok",message:"producto agregado"})
+  res.send({status:status,message:message,value:data})
 })
 export default router

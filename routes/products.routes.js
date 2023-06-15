@@ -13,7 +13,7 @@ router.get('/',async(req,res)=>{
 router.get('/:pid',async(req,res)=>{
     let id = parseInt(req.params.pid)
     const {status,message,data} = await productHandler.getProductById(id)
-    if (!data){
+    if (data){
         return res.send({status:status,message:`${message}`,value:data})
     }
         else return res.send({status:status,message:`${message}`,value:data})
@@ -22,8 +22,8 @@ router.get('/:pid',async(req,res)=>{
 
 router.post('/',async(req,res)=>{
     const {title, description, code, price, status, stock, category, thumbnail} = req.body
-    await productHandler.addProduct(title,description,code,Number(price),Boolean(status),Number(stock),category,thumbnail)
-    res.send({status:"Ok"})
+    const {stats,message,data} = await productHandler.addProduct(title,description,code,Number(price),Boolean(status),Number(stock),category,thumbnail)
+    res.send({status:stats,message:`${message}`,value:data})
 })  
 
 router.put('/:pid',async(req,res)=>{
@@ -37,7 +37,7 @@ router.put('/:pid',async(req,res)=>{
     if (stock !== undefined) await productHandler.updateProduct(id,"stock",stock)
     if (category !== undefined) await productHandler.updateProduct(id,"category",category)
     if (thumbnail !== undefined) await productHandler.updateProduct(id,"thumbnail",thumbnail)
-    res.send({status:"Ok"})
+    res.send({status:202,message:"ok"})
 })
 router.delete('/:pid',async(req,res)=>{
     let id = parseInt(req.params.pid)

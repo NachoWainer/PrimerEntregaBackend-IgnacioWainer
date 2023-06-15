@@ -1,9 +1,9 @@
 [
 	{
 		"id": 1,
-		"title": "Hola",
+		"title": "CHAU",
 		"description": "description",
-		"code": "123abc",
+		"code": "123abcd",
 		"price": 200,
 		"status": true,
 		"stock": 200,
