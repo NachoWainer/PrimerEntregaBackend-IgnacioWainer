@@ -1,0 +1,15 @@
+[
+	{
+		"id": 1,
+		"title": "Hola",
+		"description": "description",
+		"code": "123abc",
+		"price": 200,
+		"status": true,
+		"stock": 200,
+		"category": "Hola",
+		"thumbnail": [
+			"direccion"
+		]
+	}
+]
