@@ -94,7 +94,8 @@ export class ProductManager{
             "thumbnail" === prop || "code" === prop || "stock" === prop
             || "category" === prop || "status" === prop){
             if (("stock"===prop && isNaN(value)) || ("stock"===prop && Number(value) === null) || ("price"===prop && isNaN(value)) || ("price"===prop && Number(value) === null)) return {stats:412,message:"Los campos: price y stock deben ser numeros",value:[]};
-                
+            if (("title"===prop && !isNaN(value)) || ("title"===prop && value.replace(/\s/g, '') === "") || ("description"===prop && !isNaN(value)) || ("description"===prop && value.replace(/\s/g, '') === "")
+            || ("code"===prop && !isNaN(value)) || ("code"===prop && value.replace(/\s/g, '') === "")) return {stats:412,message:"Los campos: title description y code deben ser textos no vacíos",value:[]}; 
             try {
                 const data =await  fs.promises.readFile(this.path,'utf-8')
         

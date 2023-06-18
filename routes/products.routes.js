@@ -31,7 +31,6 @@ router.put('/:pid',async(req,res)=>{
     let id = parseInt(req.params.pid)
     const {title, description, code, price, status, stock, category, thumbnail} = req.body
     const checkeo = ["title", "description", "code", "price", "status", "stock", "category", "thumbnail"]
-    
     const result = []
     let contador = 0;
     for (let prop in req.body) {
