@@ -30,15 +30,18 @@ router.post('/',async(req,res)=>{
 router.put('/:pid',async(req,res)=>{
     let id = parseInt(req.params.pid)
     const {title, description, code, price, status, stock, category, thumbnail} = req.body
-    if (title !== undefined) await productHandler.updateProduct(id,"title",title)
-    if (description !== undefined) await productHandler.updateProduct(id,"description",description)
-    if (code !== undefined) await productHandler.updateProduct(id,"code",code)
-    if (price !== undefined) await productHandler.updateProduct(id,"price",price)
-    if (status !== undefined) await productHandler.updateProduct(id,"status",status)
-    if (stock !== undefined) await productHandler.updateProduct(id,"stock",stock)
-    if (category !== undefined) await productHandler.updateProduct(id,"category",category)
-    if (thumbnail !== undefined) await productHandler.updateProduct(id,"thumbnail",thumbnail)
-    res.send({status:202,message:"ok"})
+    const checkeo = ["title", "description", "code", "price", "status", "stock", "category", "thumbnail"]
+    const result = []
+    for (let prop in req.body) if (!checkeo.includes(prop)) result.push({"stats":404,"message":`La propiedad ${[prop]} no es válida`})
+    if (title !== undefined) result.push(await productHandler.updateProduct(id,"title",title))
+    if (description !== undefined) result.push(await productHandler.updateProduct(id,"description",description))
+    if (code !== undefined) result.push(await productHandler.updateProduct(id,"code",code))
+    if (price !== undefined) result.push(await productHandler.updateProduct(id,"price",price))
+    if (status !== undefined) result.push(await productHandler.updateProduct(id,"status",status))
+    if (stock !== undefined) result.push(await productHandler.updateProduct(id,"stock",stock))
+    if (category !== undefined) result.push(await productHandler.updateProduct(id,"category",category))
+    if (thumbnail !== undefined) result.push(await productHandler.updateProduct(id,"thumbnail",thumbnail))
+    res.send(result)
 })
 router.delete('/:pid',async(req,res)=>{
     let id = parseInt(req.params.pid)

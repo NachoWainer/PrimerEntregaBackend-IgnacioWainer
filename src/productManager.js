@@ -92,7 +92,7 @@ export class ProductManager{
         if ("title" === prop || "description" === prop || "price" === prop ||
             "thumbnail" === prop || "code" === prop || "stock" === prop
             || "category" === prop || "status" === prop){
-            if (("stock"===prop && isNaN(value)) || ("stock"===prop && Number(value) === null) || ("price"===prop && isNaN(value)) || ("price"===prop && Number(value) === null)) return {status:412,message:"Los campos: price y stock deben ser numeros",value:[]};
+            if (("stock"===prop && isNaN(value)) || ("stock"===prop && Number(value) === null) || ("price"===prop && isNaN(value)) || ("price"===prop && Number(value) === null)) return {stats:412,message:"Los campos: price y stock deben ser numeros",value:[]};
                 
             try {
                 const data =await  fs.promises.readFile(this.path,'utf-8')
@@ -103,22 +103,22 @@ export class ProductManager{
                     let aux2 = products[index][prop]
                     products[index][prop]=value;
                     await fs.promises.writeFile(this.path,JSON.stringify(products,null,'\t'))
-                    return{status:202,message:"actualización exitosa 202,\n producto con ID:"+ productId +"\t Su propiedad:" + prop +" \t cambio:"+ aux2 + "------>" + value,data:[]}
+                    return{stats:202,message:"actualización exitosa 202, producto con ID:"+ productId +" Su propiedad:" + prop +" cambio:"+ aux2 + "------>" + value,data:[]}
             }
             else{
                 
-                return{status:404,message:"No existe producto con ese ID",data:[]}
+                return{stats:404,message:"No existe producto con ese ID",data:[]}
             }
 
             
             } catch (error) {
-                return{status:404,message:"No existen productos",data:[]}
+                return{stats:404,message:"No existen productos",data:[]}
                     
             }     
         }
 
         else {
-            return{status:405,message:"Propiedad invalida",data:[]}
+            return{stats:405,message:"Propiedad invalida",data:[]}
         }
     }
 
@@ -130,10 +130,10 @@ export class ProductManager{
             if (products.find(e=>e.id===productId)){
                 products.splice(products.findIndex(e=>e.id===productId), 1)
                 await fs.promises.writeFile(this.path,JSON.stringify(products,null,'\t'))
-                 return{status:202,message:"producto eliminado",data:products}
+                 return{stats:202,message:"producto eliminado",data:products}
             }
             else {
-                return{status:404,message:"No existen productos con ese ID",data:[]}
+                return{stats:404,message:"No existen productos con ese ID",data:[]}
             }
             
         } catch (error) {
