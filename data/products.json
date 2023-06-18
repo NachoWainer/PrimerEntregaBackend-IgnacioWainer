@@ -1,0 +1,12 @@
+[
+	{
+		"id": 1,
+		"title": "h",
+		"description": "description",
+		"code": "123abcjaaadswyassa",
+		"price": 200,
+		"status": true,
+		"stock": 33,
+		"category": "category"
+	}
+]

@@ -31,8 +31,13 @@ router.put('/:pid',async(req,res)=>{
     let id = parseInt(req.params.pid)
     const {title, description, code, price, status, stock, category, thumbnail} = req.body
     const checkeo = ["title", "description", "code", "price", "status", "stock", "category", "thumbnail"]
+    
     const result = []
-    for (let prop in req.body) if (!checkeo.includes(prop)) result.push({"stats":404,"message":`La propiedad ${[prop]} no es válida`})
+    let contador = 0;
+    for (let prop in req.body) {
+        contador ++
+        if (!checkeo.includes(prop)) result.push({"stats":404,"message":`La propiedad ${[prop]} no es válida`})}
+    if (contador === 0) return res.send({"status":400,"message":"No se han solicitado cambios"})
     if (title !== undefined) result.push(await productHandler.updateProduct(id,"title",title))
     if (description !== undefined) result.push(await productHandler.updateProduct(id,"description",description))
     if (code !== undefined) result.push(await productHandler.updateProduct(id,"code",code))

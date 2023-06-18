@@ -19,11 +19,12 @@ export class ProductManager{
     addProduct = async( 
         title, description, code, price, status, stock, category, thumbnail
         )=>{
-            if (title === undefined || description === undefined || status === undefined || category === undefined || price === undefined ||
-                code === undefined || stock === undefined) {
-                return {status:412,message:"Los productos a agregar deben incluir 7 campos: title, description, price, code, stock. El campo thumbnail es opcional",value:[]};
+            if (!isNaN(title)||!isNaN(description)||!isNaN(category)||!isNaN(code))return {status:412,message:"Los campos: title, description , code y category deben ser texto",value:[]};
+            if (title === undefined || title.replace(/\s/g, '') === "" || description.replace(/\s/g, '') === "" ||description === undefined || 
+                category.replace(/\s/g, '') === ""|| category === undefined || price === undefined || code.replace(/\s/g, '') === ""|| code === undefined || stock === undefined) {
+                return {status:412,message:"Los productos a agregar deben incluir 7 campos no vacíos: title, description, price, code, stock. El campo thumbnail es opcional",value:[]};
             }
-            console.log(Number(stock))
+            if (status === undefined) status = true
             if (isNaN(stock) || Number(stock) === null || isNaN(price) || Number(price) === null) return {status:412,message:"Los campos: price y stock deben ser numeros",value:[]};
             const product= new Product(
                 1,
