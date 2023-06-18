@@ -64,17 +64,18 @@ export class CartManager{
             }
             else {
                 const cart = carts[carts.findIndex(e=>e.id === CartId)]
+                console.log(cart)
                 
                 const product = cart.products.find(e => e.id === ProductId)
                 let status, message
-                
+                console.log(product)
                 if (product !== undefined){ 
                 product.quantity += 1
                 status = 202
                 message = "cantidad actualizada"
                 }
                 else {
-                    cart.products.push({id:`${ProductId}`, quantity:1})
+                    cart.products.push({id:ProductId, quantity:1})
                     status = 202
                     message = "Producto agregado al carrito con Id"+" "+`${CartId}`
                 }
