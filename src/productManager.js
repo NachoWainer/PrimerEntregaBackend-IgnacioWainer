@@ -23,14 +23,16 @@ export class ProductManager{
                 code === undefined || stock === undefined) {
                 return {status:412,message:"Los productos a agregar deben incluir 7 campos: title, description, price, code, stock. El campo thumbnail es opcional",value:[]};
             }
+            console.log(Number(stock))
+            if (isNaN(stock) || Number(stock) === null || isNaN(price) || Number(price) === null) return {status:412,message:"Los campos: price y stock deben ser numeros",value:[]};
             const product= new Product(
                 1,
                 title,
                 description,
                 code,
-                price,
-                status,
-                stock,
+                Number(price),
+                Boolean(status),
+                Number(stock),
                 category,
                 thumbnail
             )
@@ -90,6 +92,8 @@ export class ProductManager{
         if ("title" === prop || "description" === prop || "price" === prop ||
             "thumbnail" === prop || "code" === prop || "stock" === prop
             || "category" === prop || "status" === prop){
+            if (("stock"===prop && isNaN(value)) || ("stock"===prop && Number(value) === null) || ("price"===prop && isNaN(value)) || ("price"===prop && Number(value) === null)) return {status:412,message:"Los campos: price y stock deben ser numeros",value:[]};
+                
             try {
                 const data =await  fs.promises.readFile(this.path,'utf-8')
         
